@@ -1,0 +1,43 @@
+# ==============================================================================
+# Production Dockerfile for Gnani VoicePrep AI - Backend Service
+# Multi-stage lightweight Python container with ffmpeg and security hardening
+# ==============================================================================
+
+FROM python:3.11-slim as base
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+WORKDIR /app
+
+# Install system dependencies: ffmpeg (for audio transcoding) and curl (for healthchecks)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies
+COPY backend/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy backend application source code
+COPY backend/app /app/app
+
+# Create storage volume mount points with non-root permissions
+RUN mkdir -p /app/storage/recordings /app/storage/identity_photos /app/storage/backups && \
+    useradd -u 1000 -m appuser && \
+    chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8010
+
+# Production Healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://127.0.0.1:8010/api/health || exit 1
+
+# Start Uvicorn ASGI server with production concurrency
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8010", "--workers", "2", "--proxy-headers", "--forwarded-allow-ips", "*"]
+

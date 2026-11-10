@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: gnani-voiceprep-backend
+    restart: unless-stopped
+    ports:
+      - "8010:8010"
+    environment:
+      - ENVIRONMENT=production
+      - PORT=8010
+      - HOST=0.0.0.0
+      - CORS_ORIGINS=http://localhost,http://127.0.0.1,http://localhost:5173
+      - AUTH_SECRET_KEY=${AUTH_SECRET_KEY:-change_me_to_a_secure_32_byte_hex_string_for_production}
+      - RECORDING_ENCRYPTION_KEY=${RECORDING_ENCRYPTION_KEY:-change_me_to_a_fernet_compatible_key_for_production}
+      - GNANI_API_KEY=${GNANI_API_KEY}
+      - GNANI_STT_URL=${GNANI_STT_URL:-https://api.vachana.ai/stt/v3}
+      - GNANI_TTS_URL=${GNANI_TTS_URL:-https://api.vachana.ai/api/v1/tts/inference}
+    volumes:
+      # Persistent SQLite database and encrypted storage volumes
+      - backend-storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8010/api/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    networks:
+      - voiceprep-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: gnani-voiceprep-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - voiceprep-network
+
+volumes:
+  backend-storage:
+    driver: local
+
+networks:
+  voiceprep-network:
+    driver: bridge
+

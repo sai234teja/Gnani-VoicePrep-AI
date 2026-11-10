@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-base: #F5F7FA;
+    --color-bg-surface: #FFFFFF;
+    --color-bg-card: #FFFFFF;
+    --color-bg-subtle: #F8FAFC;
+    --color-border-subtle: #E2E8F0;
+    --color-border-medium: #CBD5E1;
+    --color-text-primary: #172B45;
+    --color-text-secondary: #64748B;
+    --color-text-muted: #94A3B8;
+    --color-action-primary: #315C8C;
+    --color-action-hover: #264A72;
+    --color-accent-teal: #167C72;
+    --color-accent-teal-hover: #11625A;
+  }
+
+  body {
+    background-color: #F5F7FA;
+    color: #172B45;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    selection-background-color: #315C8C;
+    selection-color: #FFFFFF;
+  }
+}
+
+/* Professional White Card System */
+.saas-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 0.75rem;
+}
+
+.saas-card-hover {
+  transition: all 0.15s ease-in-out;
+}
+
+.saas-card-hover:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Primary Enterprise Action Button (#315C8C) */
+.btn-primary {
+  background-color: #315C8C;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #264A72;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Secondary Enterprise Action Button */
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #172B45;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid #CBD5E1;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0F172A;
+}
+
+/* Accent Teal Button (#167C72) */
+.btn-accent {
+  background-color: #167C72;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.15s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: #11625A;
+}
+
+/* Clean Professional Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

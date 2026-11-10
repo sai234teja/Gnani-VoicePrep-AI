@@ -1,0 +1,80 @@
+# Operating System artifacts
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Environment & Local Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+.venv/
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Node.js & Vite
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+.eslintcache
+.stylelintcache
+
+# Local Storage & Database
+backend/storage/recordings/*.enc
+backend/storage/identity_photos/*
+backend/storage/*.db
+backend/storage/*.db-journal
+backend/storage/*.db-wal
+backend/storage/backups/*
+!backend/storage/.gitkeep
+
+# IDE & Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+# Actual application storage protection
+backend/app/storage/*.db
+backend/app/storage/*.db-*
+backend/app/storage/*.sqlite
+backend/app/storage/*.sqlite3
+backend/app/storage/backups/
+backend/app/storage/recordings/
+backend/app/storage/identity_photos/
